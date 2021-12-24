@@ -1,6 +1,6 @@
 import pytest
 
-import piece
+import pieces
 
 
 @pytest.mark.parametrize(
@@ -21,7 +21,7 @@ import piece
     ]
 )
 def test_ind_to_xyz(index, expected):
-    actual = piece.ind_to_xyz(index)
+    actual = pieces.ind_to_xyz(index)
     assert actual == expected
 
 
@@ -43,5 +43,5 @@ def test_ind_to_xyz(index, expected):
     ]
 )
 def test_xyz_to_ind(xyz, expected):
-    actual = piece.xyz_to_ind(xyz)
+    actual = pieces.xyz_to_ind(xyz)
     assert actual == expected
