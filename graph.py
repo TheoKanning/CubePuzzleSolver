@@ -19,9 +19,7 @@ def plot_piece(piece):
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
 
-    # Voxels is used to customizations of the
-    # sizes, positions and colors.
-    ax.voxels(data, facecolors=colors)
+    ax.voxels(data, facecolors=colors, edgecolors='black')
     ax.set_xticks([0, 1, 2])
     ax.set_yticks([0, 1, 2])
     ax.set_zticks([0, 1, 2])

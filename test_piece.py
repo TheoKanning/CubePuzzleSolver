@@ -45,3 +45,14 @@ def test_ind_to_xyz(index, expected):
 def test_xyz_to_ind(xyz, expected):
     actual = pieces.xyz_to_ind(xyz)
     assert actual == expected
+
+@pytest.mark.parametrize(
+    ["piece", "expected"],
+    [
+        [((0, 0, 0), (1, 1, 0), (1, 2, 1)), "0 4 16"],
+        [((0, 0, 0), (0, 1, 0), (1, 0, 1)), "0 3 10"]
+    ]
+)
+def test_piece_key(piece, expected):
+    actual = pieces.piece_key(piece)
+    assert actual == expected
