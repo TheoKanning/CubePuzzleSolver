@@ -7,8 +7,8 @@ def plot_piece(piece):
     axes = [3, 3, 3]
 
     data = np.zeros(axes, dtype=np.bool)
-    for xyz in piece:
-        data[xyz] = 1
+    for x, y, z in piece:
+        data[x, y, z] = 1
 
     alpha = 0.9
     
