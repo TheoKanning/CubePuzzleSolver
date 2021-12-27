@@ -23,7 +23,7 @@ for s in range(27):
   ct = solver.Constraint(1, 1, f"square {s}")
   for p, piece_vars in enumerate(variables.values()):
     for c, var in enumerate(piece_vars):
-      if s in piece_configurations[p][c]:
+      if s in piece_configurations[p][c].indices:
         ct.SetCoefficient(var, 1)
 
 # objective is to place all pieces
@@ -45,7 +45,6 @@ for p, piece_vars in enumerate(variables.values()):
       solution.append(piece_configurations[p][c])
       break
 
-solution.sort(key=sum)
-solution = [[ind_to_xyz(i) for i in piece] for piece in solution]
+solution.sort(key=lambda x: sum(x.indices))
 for p in range(num_pieces):
   plot_pieces(solution[:p+1])

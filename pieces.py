@@ -4,30 +4,42 @@ import numpy as np
 
 from typing import List
 
-Piece = namedtuple('Piece', ['points', 'edges', 'colors'])
+class Piece:
+  def __init__(self, points: List[tuple], edges: List[tuple], colors: List[str]):
+    self.points = points
+    self.indices = [xyz_to_ind(p) for p in points]
+    self.edges = edges
+    self.colors = colors
+
 
 PIECES = [
-    ((0, 0, 0), (1, 1, 0), (1, 2, 1)),
-    ((0, 0, 0), (0, 1, 0), (1, 0, 1)),
-    ((0, 0, 0), (1, 0, 0), (2, 0, 0)),
-    ((0, 0, 0), (1, 1, 0), (2, 1, 1)),
-    ((0, 0, 0), (0, 1, 0), (1, 2, 0)),
-    ((0, 0, 0), (1, 0, 0), (0, 1, 0)),
-    ((0, 0, 0), (0, 1, 1), (1, 1, 0)),
-    ((0, 0, 0), (1, 1, 0), (2, 2, 0)),
-    ((0, 0, 0), (1, 1, 0), (0, 2, 0)),
-]
-
-PIECES_2 = [
-    Piece(points=((0, 0, 0), (1, 1, 0), (1, 2, 1)), edges=[], colors=['']),
-    Piece(points=((0, 0, 0), (0, 1, 0), (1, 0, 1)), edges=[], colors=['']),
-    Piece(points=((0, 0, 0), (1, 0, 0), (2, 0, 0)), edges=[], colors=['']),
-    Piece(points=((0, 0, 0), (1, 1, 0), (2, 1, 1)), edges=[], colors=['']),
-    Piece(points=((0, 0, 0), (0, 1, 0), (1, 2, 0)), edges=[], colors=['']),
-    Piece(points=((0, 0, 0), (1, 0, 0), (0, 1, 0)), edges=[], colors=['']),
-    Piece(points=((0, 0, 0), (0, 1, 1), (1, 1, 0)), edges=[], colors=['']),
-    Piece(points=((0, 0, 0), (1, 1, 0), (2, 2, 0)), edges=[], colors=['']),
-    Piece(points=((0, 0, 0), (1, 1, 0), (0, 2, 0)), edges=[], colors=['']),
+    Piece(points=((0, 0, 0), (1, 1, 0), (1, 2, 1)), 
+          edges=[((1, 1, 0), (1, 1, 1)), ((1, 2, 1), (2, 2, 1))], 
+          colors=['g', 'r', 'g']),
+    Piece(points=((0, 0, 0), (0, 1, 0), (1, 0, 1)), 
+          edges=[((1, 1, 1), (1, 2, 1))], 
+          colors=['r', 'r', 'r']),
+    Piece(points=((0, 0, 0), (1, 0, 0), (2, 0, 0)), 
+          edges=[], 
+          colors=['r', 'r', 'r']),
+    Piece(points=((0, 0, 0), (1, 1, 0), (2, 1, 1)), 
+          edges=[((1, 1, 0), (1, 1, 1)), ((2, 1, 1), (2, 2, 1))], 
+          colors=['r', 'g', 'g']),
+    Piece(points=((0, 0, 0), (0, 1, 0), (1, 2, 0)), 
+          edges=[((1, 2, 0), (1, 2, 1))], 
+          colors=['r', 'g', 'g']),
+    Piece(points=((0, 0, 0), (1, 0, 0), (0, 1, 0)), 
+          edges=[], 
+          colors=['r', 'g', 'r']),
+    Piece(points=((0, 0, 0), (0, 1, 1), (1, 1, 0)), 
+          edges=[((1, 1, 0), (1, 1, 1)), ((0, 1, 1), (1, 1, 1)), ((1, 1, 1), (1, 2, 1))], 
+          colors=['g', 'g', 'g']),
+    Piece(points=((0, 0, 0), (1, 1, 0), (2, 2, 0)), 
+          edges=[((1, 1, 0), (1, 1, 1)), ((2, 2, 0), (2, 2, 1))], 
+          colors=['r', 'g', 'r']),
+    Piece(points=((0, 0, 0), (1, 1, 0), (0, 2, 0)), 
+          edges=[((1, 1, 0), (1, 1, 1)), ((1, 2, 0), (1, 2, 1))], 
+          colors=['g', 'g', 'g']),
 ]
 
 
