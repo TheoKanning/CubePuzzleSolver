@@ -2,10 +2,14 @@ from typing import List
 
 from ortools.linear_solver import pywraplp
 
-from pieces import Piece, Tuple
+from pieces import Edge, Piece
 
 
-def solve(piece_configurations: List[List[Piece]], edges: List[List[Tuple]]):
+def solve(piece_configurations: List[List[Piece]], edges: List[Edge]):
+    """
+    Takes a list of available configurations for each piece and a list of all internal edges
+    Returns a list of nine piece configurations that represent a solution to the cube puzzle
+    """
     num_pieces = 9
     solver = pywraplp.Solver.CreateSolver('SCIP')
 

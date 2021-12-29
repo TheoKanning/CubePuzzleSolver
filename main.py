@@ -1,5 +1,3 @@
-# todo add point namedtuple to prevent list hashing issues
-
 import graph
 import pieces
 import solve
