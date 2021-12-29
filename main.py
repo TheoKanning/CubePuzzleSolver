@@ -1,4 +1,4 @@
-import graph
+import plot
 import pieces
 import solve
 
@@ -9,4 +9,4 @@ solution = solve.solve(piece_configurations, edges)
 
 solution.sort(key=lambda x: sum(x.indices))
 for p in range(9):
-    graph.plot_pieces(solution[:p + 1])
+    plot.plot_pieces(solution[:p + 1])
