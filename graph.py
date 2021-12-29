@@ -1,5 +1,9 @@
+from typing import List
+
 import matplotlib.pyplot as plt
 import numpy as np
+
+from pieces import Piece
 
 
 def plot_piece(piece: Piece, plot_edges=False):
