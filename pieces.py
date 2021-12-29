@@ -1,54 +1,49 @@
-from collections import namedtuple
 import itertools
-import numpy as np
-
 from typing import List, Tuple
+
+import numpy as np
 
 
 def ind_to_xyz(ind: int) -> tuple:
     z, ind = divmod(ind, 9)
     y, x = divmod(ind, 3)
-    return (x, y, z)
+    return x, y, z
 
 
 def xyz_to_ind(xyz: tuple):
     x, y, z = xyz
-    return 9*z + 3*y + x
-  
-
-class Edge:
-  def __init__(p1: Tuple, p2: Tuple):
-    pass
+    return 9 * z + 3 * y + x
 
 
 class Piece:
-  def __init__(self, points: List[tuple], colors: List[str]):
-    self.points = points
-    self.indices = [xyz_to_ind(p) for p in points]
-    self.edges = self._calculate_edges(points)
-    self.colors = colors
+    def __init__(self, points: List[tuple], colors: List[str]):
+        self.points = points
+        self.indices = [xyz_to_ind(p) for p in points]
+        self.edges = self._calculate_edges(points)
+        self.colors = colors
 
-  def _calculate_edges(self, points) -> List[Tuple[Tuple]]:
-      """
-      Calculates if any of piece's point share two corners
-      These special edges must be tracked so that pieces don't share them
-      """
-      def corners(point: Tuple):
-        # points are indexed from their lowest corners, so get their corners by adding 1 in each direction
-        return set(itertools.product((point[0], point[0] + 1), (point[1], point[1] + 1), (point[2], point[2] + 1)))
+    def _calculate_edges(self, points) -> List[Tuple[Tuple]]:
+        """
+        Calculates if any of piece's point share two corners
+        These special edges must be tracked so that pieces don't share them
+        """
 
-      edges = []
+        def corners(point: Tuple):
+            # points are indexed from their lowest corners, so get their corners by adding 1 in each direction
+            return set(itertools.product((point[0], point[0] + 1), (point[1], point[1] + 1), (point[2], point[2] + 1)))
 
-      for p1, p2 in [(0, 1), (0, 2), (1, 2)]:
-        p1_corners = corners(points[p1])
-        p2_corners = corners(points[p2])
+        edges = []
 
-        intersection = p1_corners.intersection(p2_corners)
+        for p1, p2 in [(0, 1), (0, 2), (1, 2)]:
+            p1_corners = corners(points[p1])
+            p2_corners = corners(points[p2])
 
-        if len(intersection) == 2:
-          edges.append(intersection)
+            intersection = p1_corners.intersection(p2_corners)
 
-      return edges
+            if len(intersection) == 2:
+                edges.append(intersection)
+
+        return edges
 
 
 PIECES = [
@@ -74,18 +69,18 @@ PIECES = [
 
 
 def get_internal_edges():
-  edges = {}
-  internal_points = itertools.product([1, 2], [1, 2], [1, 2])
+    edges = {}
+    internal_points = itertools.product([1, 2], [1, 2], [1, 2])
 
-  for point in internal_points:
-    for axis in range(3):
-      for delta in [-1, 1]:
-        new_point = list(point)
-        new_point[axis] += delta
-        key = edge_key((point, new_point))
-        edges[key] = {tuple(point), tuple(new_point)}
+    for point in internal_points:
+        for axis in range(3):
+            for delta in [-1, 1]:
+                new_point = list(point)
+                new_point[axis] += delta
+                key = edge_key((point, new_point))
+                edges[key] = {tuple(point), tuple(new_point)}
 
-  return list(edges.values())
+    return list(edges.values())
 
 
 def piece_key(piece: Piece) -> str:
