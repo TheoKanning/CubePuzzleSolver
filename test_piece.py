@@ -46,13 +46,42 @@ def test_xyz_to_ind(xyz, expected):
     actual = pieces.xyz_to_ind(xyz)
     assert actual == expected
 
+
 @pytest.mark.parametrize(
-    ["piece", "expected"],
+    ["points", "expected"],
     [
         [((0, 0, 0), (1, 1, 0), (1, 2, 1)), "0 4 16"],
         [((0, 0, 0), (0, 1, 0), (1, 0, 1)), "0 3 10"]
     ]
 )
-def test_piece_key(piece, expected):
+def test_piece_key(points, expected):
+    piece = pieces.Piece(points=points, colors=[])
     actual = pieces.piece_key(piece)
     assert actual == expected
+
+
+@pytest.mark.parametrize(
+    ["points", "expected"],
+    [
+        [((1, 1, 0), (1, 1, 1)), "110 111"],
+        [((0, 1, 0), (0, 0, 0)), "000 010"]
+    ]
+)
+def test_edge_key(points, expected):
+    actual = pieces.edge_key(points)
+    assert actual == expected
+
+
+@pytest.mark.parametrize(
+    ["points", "expected"],
+    [
+        [((0, 0, 0), (1, 1, 0), (1, 2, 1)), ["110 111", "121 221"]],
+        [((0, 0, 0), (0, 1, 0), (1, 0, 1)), ["101 111"]],
+        [((0, 0, 0), (1, 0, 0), (2, 0, 0)), []]
+    ]
+)
+def test_calculate_edges(points, expected):
+    piece = pieces.Piece(points=points, colors=[])
+    actual = [pieces.edge_key(e) for e in piece.edges]
+    assert actual == expected
+

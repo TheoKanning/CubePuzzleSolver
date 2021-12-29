@@ -1,5 +1,4 @@
 # todo add point namedtuple to prevent list hashing issues
-# todo edge tests
 
 import graph
 import pieces

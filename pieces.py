@@ -88,8 +88,9 @@ def piece_key(piece: Piece) -> str:
     Returns a string containing the index for each cube in this piece.
     This can be used as a key to find unique configurations
     """
-    indices = [str(xyz_to_ind(point)) for point in piece.points]
+    indices = [xyz_to_ind(point) for point in piece.points]
     indices.sort()
+    indices = map(str, indices)
     return " ".join(indices)
 
 
