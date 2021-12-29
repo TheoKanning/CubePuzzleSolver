@@ -26,6 +26,14 @@ for s in range(27):
       if s in piece_configurations[p][c].indices:
         ct.SetCoefficient(var, 1)
 
+# each edge can be occupied at most once
+for edge in get_internal_edges():
+  ct = solver.Constraint(0, 1, f"edge {edge}")
+  for p, piece_vars in enumerate(variables.values()):
+    for c, var in enumerate(piece_vars):
+      if edge in piece_configurations[p][c].edges:
+        ct.SetCoefficient(var, 1)
+
 # objective is to place all pieces
 objective = solver.Objective()
 objective.SetMaximization()
